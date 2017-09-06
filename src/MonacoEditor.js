@@ -1,10 +1,21 @@
 import React from 'react';
-import ResizeAware from 'react-resize-aware';
+import ReactResizeDetector from 'react-resize-detector';
 
 import {init} from './monacoProvider.js';
 import './darkThemePlus.js';
 
 class MonacoEditor extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            height: 0,
+            width: 0
+        };
+        this.onResize = this.onResize.bind(this);
+    }
+    onResize(width, height) {
+        this.setState({height, width});
+    }
     componentDidMount() {
         init.then(monaco => {
             if(this.props.theme) {
@@ -17,20 +28,19 @@ class MonacoEditor extends React.Component {
     }
     render() {
         return (
-            <div 
-                ref={elt => this.editor = elt}
-                style={{
-                    height: this.props.height || 0, 
-                    width: this.props.width || 0, 
-                    overflow: 'hidden'
-                }} 
-            />
+            <div style={{height: '100%', overflow: 'hidden'}}>
+                <ReactResizeDetector handleWidth handleHeight onResize={this.onResize.bind(this)}/>
+                <div 
+                    ref={elt => this.editor = elt}
+                    style={{
+                        height: this.state.height, 
+                        width: this.state.width, 
+                        overflow: 'hidden'
+                    }} 
+                />
+            </div>
         );
     }
 }
 
-export default props => (
-    <ResizeAware style={{height: '100%', width: '100%'}}>
-        <MonacoEditor {...props}/>
-    </ResizeAware>
-);
+export default MonacoEditor;
