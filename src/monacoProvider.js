@@ -10,12 +10,12 @@ const callbackEveryone = m => {
 };
 
 export const init = new Promise((resolve, reject) => {
-    if(monaco !== undefined) {
+    if (monaco !== undefined) {
         resolve(monaco);
     }
     else {
         pending.push(resolve);
-        if(!fetching) {
+        if (!fetching) {
             fetching = true;
             const loaderScript = document.createElement('script');
             loaderScript.type = 'text/javascript';

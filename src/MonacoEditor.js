@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
-import {init} from './monacoProvider.js';
-import './darkThemePlus.js';
+import defineDarkTheme from './darkThemePlus.js';
 
 class MonacoEditor extends React.Component {
     constructor(props) {
@@ -12,13 +11,15 @@ class MonacoEditor extends React.Component {
             width: 0
         };
         this.onResize = this.onResize.bind(this);
+        this.init = require('./monacoProvider.js').init;
+        defineDarkTheme(this.init);
     }
     onResize(width, height) {
         this.setState({height, width});
     }
     componentDidMount() {
-        init.then(monaco => {
-            if(this.props.theme) {
+        this.init.then(monaco => {
+            if (this.props.theme) {
                 monaco.editor.defineTheme(this.props.theme.key, this.props.theme);
                 monaco.editor.setTheme(this.props.theme.key);
             }

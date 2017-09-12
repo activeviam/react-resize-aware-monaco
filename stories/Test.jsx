@@ -5,18 +5,23 @@ class Test extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: 500
+      width: 500,
+      visible: false
     };
     this.toggleWidth = this.toggleWidth.bind(this);
+    this.toggleVisible = this.toggleVisible.bind(this);
   }
   toggleWidth() {
     this.setState({width: this.state.width === 500 ? 800 : 500});
+  }
+  toggleVisible() {
+    this.setState({visible: !this.state.visible});
   }
   render() {
     return (
       <div style={{height: '100%'}}>
         <div style={{height: 'calc(100% - 50px)', width: this.state.width, background: 'red', maxWidth:'100%'}}>
-          <MonacoEditor 
+          {this.state.visible ? <MonacoEditor 
             theme={{
                 key: 'zob',
                 base: 'vs-dark', // can also be vs-dark or hc-black
@@ -46,10 +51,11 @@ class Test extends React.Component {
                 });
               },
             });
-            `}}/>
+            `}}/> : null}
         </div>
         <div>
           <button onClick={this.toggleWidth}>Toggle Width</button>
+          <button onClick={this.toggleVisible}>Toggle Visible</button>
         </div>
       </div>
     )
