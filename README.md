@@ -2,6 +2,9 @@
 
 react-resize-aware-monaco exposes Microsoft's [Monaco Editor](https://github.com/Microsoft/monaco-editor) as a React Component.
 
+> This tool is not used anymore internally. Therefore, we wont' maintain nor improve it anymore.
+> Open an issue if you want to adopt this project.
+
 ### Installation
 Add react-monaco to your dependencies:
 
